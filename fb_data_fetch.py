@@ -1,8 +1,8 @@
+import os
 import requests
 import csv
 
-# Fixed access token
-PAGE_ACCESS_TOKEN = "EAAVChJmQ8fgBPCy2cxYMCuPgAn24q8kNNjzV9wKpKvnkFEFAWHY0AS8laDZBvWXD5Yc5lW3wHboFcc58V83wsELavxbkAZBKKfkfpIi55CzMzNWc05czkRvBvAdAuYcRAbWWYVr2lkkGCouyhoqTe2C4Ivv5OlWolHz2sAj9aS0ZCdmxAZBu790YxNyOpz0TBZBlEznaLX7C7eXqVkZCXejiH8ZBPVPaASUZAAFyJ2GgXQZDZD"
+PAGE_ACCESS_TOKEN = os.getenv("FB_PAGE_ACCESS_TOKEN")
 OUTPUT_CSV = "facebook_page_data.csv"
 
 def get_page_id(page_name, access_token):
@@ -135,6 +135,8 @@ def save_to_csv(page_info, reviews, posts, filename):
                 ])
 
 if __name__ == "__main__":
+    if not PAGE_ACCESS_TOKEN:
+        raise SystemExit("Set FB_PAGE_ACCESS_TOKEN in your environment first.")
     page_name = input("Enter Facebook Page Name/Username: ").strip()
     print("Fetching Page ID...")
     page_id = get_page_id(page_name, PAGE_ACCESS_TOKEN)
